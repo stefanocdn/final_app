@@ -12,7 +12,6 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'will_paginate-bootstrap'
 gem 'jquery-rails', '2.0.2'
-gem 'pg'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'pg_search'
@@ -27,6 +26,9 @@ gem 'rspec-rails', '2.11.0'
 # gem 'spork', '0.9.2'
 end
 
+group :production do
+gem 'pg'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
