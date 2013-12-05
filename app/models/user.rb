@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :birthday,
-   :password, :password_confirmation
+   :password, :password_confirmation, :avatar
 
   has_secure_password
+  mount_uploader :avatar, AvatarUploader
 
   # Callbacks
   before_save { email.downcase! }
