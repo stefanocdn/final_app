@@ -6,15 +6,15 @@
 <%= form_for(@user) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 <%= f.label :first_name, "First Name" %>
-<%= f.text_field :first_name, autofocus: true %>
+<%= f.text_field :first_name, autofocus: true %><br/>
 <%= f.label :last_name, "Last Name" %>
-<%= f.text_field :last_name %>
+<%= f.text_field :last_name %><br/>
 <%= f.label :email %>
-<%= f.text_field :email %>
+<%= f.text_field :email %><br/>
 <%= f.label :password %>
-<%= f.password_field :password %>
+<%= f.password_field :password %><br/>
 <%= f.label :password_confirmation, "Confirmation" %>
-<%= f.password_field :password_confirmation %>
+<%= f.password_field :password_confirmation %><br/>
 <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
 <% end %>
 </div><!-- span6 offset3 -->
