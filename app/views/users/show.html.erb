@@ -4,8 +4,8 @@
   <aside class="col-md-4">
 	<section>
 	<h1>
-	<%= image_tag(user.avatar_url.to_s, alt: user.to_s, class: "avatar") %>
-	<%= @user.name %>
+	<%= image_tag(@user.avatar_url.to_s, alt: @user.to_s, class: "avatar") %>
+	<%= @user.to_s %>
 	</h1>
 	</section>
   </aside><!-- aside span4 -->

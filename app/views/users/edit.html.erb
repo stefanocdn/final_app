@@ -1,9 +1,9 @@
-<% provide(:title, 'Sign up') %>
+<% provide(:title, "Edit user") %>
 <div class="container">
-<h1>Sign up</h1>
+<h1>Update your profile</h1>
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, :html => {:multipart => true}) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 <%= f.label :first_name, "First Name" %>
 <%= f.text_field :first_name, autofocus: true %><br/>
@@ -13,10 +13,12 @@
 <%= f.text_field :email %><br/>
 <%= f.label :password %>
 <%= f.password_field :password %><br/>
-<%= f.label :password_confirmation, "Confirmation" %>
+<%= f.label :password_confirmation, "Confirm Password" %>
 <%= f.password_field :password_confirmation %><br/>
-<%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+<%= f.label :birthday %>
+<%= f.date_select :birthday %><br />
+<%= f.file_field :avatar %><br/>
+<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 <% end %>
-</div><!-- span6 offset3 -->
-</div><!-- row -->
-</div><!-- container -->
+</div>
+</div>
