@@ -29,10 +29,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-<<<<<<< HEAD
-    @scholarships = @user.scholarships
-=======
->>>>>>> static
   end
 
   def update
@@ -50,8 +46,6 @@ class UsersController < ApplicationController
     flash[:success] = "User destroyed."
     redirect_to users_url
   end
-<<<<<<< HEAD
-=======
 
   private
 
@@ -63,5 +57,4 @@ class UsersController < ApplicationController
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end
->>>>>>> static
 end
