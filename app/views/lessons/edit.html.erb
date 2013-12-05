@@ -1,0 +1,24 @@
+<% provide(:title, 'Edit Lesson') %>
+
+<div class="container">
+<h1>Edit your lesson</h1>
+<div class="row">
+<div class="col-md-6">
+<%= form_for(@lesson) do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+<%= f.label :title %>
+<%= f.text_field :title %><br/>
+<%= f.label :category_tokens, "Categories" %>
+<%= f.text_field :category_tokens, data: {load: @lesson.categories} %><br/>
+<%= f.label :address %>
+<%= f.text_field :address %><br/>
+<%= f.label :content %>
+<%= f.text_area :content, :size => "25x10" %><br/>
+<%= f.label :price, 'Price per hour' %>
+<%= f.number_field :price, :min => 0 %><br/>
+
+<%= f.submit "Update my lesson", class: "btn btn-large btn-primary" %>
+<% end %>
+</div>
+</div>
+</div>

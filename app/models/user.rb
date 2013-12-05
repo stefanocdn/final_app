@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_secure_password
   mount_uploader :avatar, AvatarUploader
 
+  has_many :lessons, dependent: :destroy
+
   # Callbacks
   before_save { email.downcase! }
   before_save :create_remember_token

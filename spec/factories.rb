@@ -10,4 +10,15 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :lesson do
+    title "Lorem ipsum"
+    content "Lorem ipsum"
+    price 50
+    user
+  end
+
+  factory :category do
+    name "Math"
+  end
 end

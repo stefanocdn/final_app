@@ -1,0 +1,33 @@
+<li id="<%= lesson.id %>">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+    <h2 class="panel-title"><%= lesson.title %></h2>
+    </div>
+
+    <div class="panel-body">
+      <span class="user_info">
+      <%= link_to image_tag(lesson.user.avatar_url.to_s, alt: lesson.user.to_s, class: "avatar", size: "150x150"), lesson.user %>
+
+        <h3><%= lesson.user.to_s %></h3>
+      </span>
+
+      <span class="price">
+      	<%= number_to_currency(lesson.price) %> </br>
+        <h5>per hour</h5>
+      </span>
+      <span class="content"><%= lesson.content %></span>
+      <span class="timestamp">
+      	Posted <%= time_ago_in_words(lesson.created_at) %> ago.
+      </span>
+      <span class="view_profile">
+          <i class="fa fa-eye"></i> <%= link_to "View Profile", lesson.user %>
+        </span> 
+    	<% if current_user?(lesson.user) %>
+        <%= link_to "delete", lesson, method: :delete,
+                                         data: { confirm: 'You sure?' },
+                                         title: lesson.title %>
+        <i class="icon-trash"></i>
+    	<% end %>
+    </div><!-- panel body -->
+  </div><!-- panel panel-default -->
+</li><!-- li -->

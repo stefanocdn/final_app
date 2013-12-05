@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.tokeninput
 //= require bootstrap
+//= require underscore
 //= require gmaps/google
 //= require_tree .

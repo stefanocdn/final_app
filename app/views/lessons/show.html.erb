@@ -1,0 +1,50 @@
+<% provide(:title, @lesson.title) %>
+
+<div class="container">
+<h1>Lesson</h1>
+<div class="row">
+<aside class="col-md-4">
+  <section>
+  <h1>
+  <%= image_tag(@lesson.user.avatar_url.to_s, alt: @lesson.user.to_s, class: "avatar") %>
+  <%= @lesson.user.to_s %>
+  </h1>
+  </section>
+</aside><!-- aside span4 -->
+
+<div class="col-md-8">
+<span class="title">
+<%= @lesson.title %>
+</span>
+<span class="content">
+<%= @lesson.content %>
+</span>
+<span class="price">
+<%= number_to_currency(@lesson.price) %>
+</span>
+<span class="categories">
+<ul>
+<% @lesson.categories.each do |cat| %>
+  <li><%= cat.name %></li>
+<% end %>
+</ul>
+</span>
+<span class="nearby">
+<h3>Nearby Lessons</h3>
+<ul>
+<% for lesson in @lesson.nearbys(10) %>
+  <li><%= link_to lesson.title, lesson %> (<%= lesson.distance.to_f.round(2) %> miles)</li>
+<% end %>
+</ul>
+</span>
+<span class="timestamp">
+Posted <%= time_ago_in_words(@lesson.created_at) %> ago.
+</span>
+</div><!-- div col-md -->
+</div><!-- row -->
+<p>
+  <%= link_to "Edit", edit_lesson_path(@lesson) %> |
+  <%= link_to "Destroy", @lesson, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", lessons_path %>
+</p>
+</div><!-- container -->
