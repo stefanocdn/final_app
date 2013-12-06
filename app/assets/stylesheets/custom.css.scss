@@ -1,2 +1,56 @@
 @import "font-awesome";
 @import "bootstrap";
+
+/* SORTABLE ARROWS, LESSONS#INDEX */
+
+.current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.asc { 
+  background-image: url(up_arrow.gif); 
+}
+.desc { 
+  background-image: url(down_arrow.gif); 
+}
+
+/* TAG CLOUD */
+
+.panel.panel-info {
+  width: 800px;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+#tag_cloud {
+  width: 400px;
+  line-height: 1.6em;
+  .s { font-size: 0.8em; }
+  .m { font-size: 1.2em; }
+  .l { font-size: 1.8em; }
+}
+
+/* AUTOCOMPLETE LIST */
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px #999;
+  cursor: default;
+  li {
+    background-color: #FFF;
+    border-top: solid 1px #DDD;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #000;
+      display: block;
+      padding: 3px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: #005580;
+    }
+  }
+}

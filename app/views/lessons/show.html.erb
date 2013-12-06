@@ -24,18 +24,23 @@
 </span>
 <span class="categories">
 <ul>
+<% if @lesson.categories.any? %>
 <% @lesson.categories.each do |cat| %>
   <li><%= cat.name %></li>
+<% end %>
 <% end %>
 </ul>
 </span>
 <span class="nearby">
+<% if @lesson.geocoded? %>
+<h2>Address: <%= @lesson.address %></h2>
 <h3>Nearby Lessons</h3>
 <ul>
 <% for lesson in @lesson.nearbys(10) %>
   <li><%= link_to lesson.title, lesson %> (<%= lesson.distance.to_f.round(2) %> miles)</li>
 <% end %>
 </ul>
+<% end %>
 </span>
 <span class="timestamp">
 Posted <%= time_ago_in_words(@lesson.created_at) %> ago.

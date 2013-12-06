@@ -19,6 +19,7 @@ let(:user) { FactoryGirl.create(:user) }
   it { should respond_to(:categories) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  it { should respond_to(:tag_list) }
   its(:user) { should == user }
 
   it { should be_valid }

@@ -153,23 +153,23 @@ describe "Authentication" do
       # end
 
 
-      # describe "in the Lessons controller" do
+      describe "in the Lessons controller" do
 
-      #   describe "submitting to the new action" do
-      #     before { get new_lesson_path }
-      #     specify { response.should redirect_to(signin_url) }
-      #   end
+        describe "submitting to the new action" do
+          before { get new_lesson_path }
+          specify { response.should redirect_to(signin_url) }
+        end
 
-      #   describe "submitting to the create action" do
-      #     before { post lessons_path }
-      #     specify { response.should redirect_to(signin_url) }
-      #   end
+        describe "submitting to the create action" do
+          before { post lessons_path }
+          specify { response.should redirect_to(signin_url) }
+        end
 
-      #   describe "submitting to the destroy action" do
-      #     before { delete lesson_path(FactoryGirl.create(:lesson)) }
-      #     specify { response.should redirect_to(signin_url) }
-      #   end
-      # end
+        describe "submitting to the destroy action" do
+          before { delete lesson_path(FactoryGirl.create(:lesson)) }
+          specify { response.should redirect_to(signin_url) }
+        end
+      end
 
       # describe "in the Microposts controller" do
 
@@ -225,11 +225,27 @@ describe "Authentication" do
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      let!(:l1) { FactoryGirl.create(:lesson, user: wrong_user) }
       before { sign_in user }
 
       describe "visiting Users#edit page" do
         before { visit edit_user_path(wrong_user) }
         it { should have_selector('title', text: full_title('')) }
+      end
+
+      describe "visiting Lessons#edit page" do
+        before { visit edit_lesson_path(l1) }
+        it { should have_selector('title', text: full_title('')) }
+      end
+
+      describe "submitting a PUT request to the Lessons#update action" do
+        before { put lesson_path(l1) }
+        specify { response.should redirect_to(root_url) }
+      end
+
+      describe "submitting a DELETE request to the Lessons#destroy action" do
+        before { delete lesson_path(l1) }
+        specify { response.should redirect_to(root_url) }
       end
 
       # describe "visiting Users#inbox page" do

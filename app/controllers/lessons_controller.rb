@@ -1,16 +1,18 @@
 class LessonsController < ApplicationController
 	helper_method :sort_column, :sort_direction
 	before_filter :signed_in_user,
-                only: [:new, :create, :destroy]
+                only: [:new, :edit, :create, :destroy]
     before_filter :correct_user, only: [:edit, :update, :destroy]
 
 	def index
 	  if params[:tag]
-    	@lessons = Lesson.tagged_with(params[:tag]).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(2)
+    	@lessons = Lesson.tagged_with(params[:tag]).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
+      elsif params[:location].present?
+      	@lessons = Lesson.near(params[:location], 5, :order => :distance).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
       else
-	    @lessons = Lesson.text_search(params[:search]).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(2)
+	    @lessons = Lesson.text_search(params[:search]).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
 	  end
-	  @hash = Gmaps4rails.build_markers(@lessons) do |lesson, marker|
+	  @hash = Gmaps4rails.build_markers(@lessons.with_address) do |lesson, marker|
 		marker.lat lesson.latitude
 		marker.lng lesson.longitude
 		marker.infowindow lesson.title
@@ -22,7 +24,7 @@ class LessonsController < ApplicationController
 	end
 
 	def show
-	  @lesson = Lesson.find(params[:id])
+	  @lesson = Lesson.includes(:user).find(params[:id])
 	end
 
 	def create
@@ -41,7 +43,7 @@ class LessonsController < ApplicationController
 	end
 
 	def edit
-      @lesson = Lesson.find(params[:id])
+      @lesson = Lesson.includes(:user).find(params[:id])
     end
 
     def update
@@ -57,7 +59,7 @@ class LessonsController < ApplicationController
 
 	def correct_user
 	  @lesson = current_user.lessons.find_by_id(params[:id])
-	  redirect_to current_user if @lesson.nil?
+	  redirect_to root_path if @lesson.nil?
 	end
 
 	def sort_column

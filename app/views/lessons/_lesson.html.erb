@@ -10,6 +10,13 @@
 
         <h3><%= lesson.user.to_s %></h3>
       </span>
+      <span class="category">
+        <% lesson.categories.each do |cat| %>
+          <%= link_to(tag_path(cat.name), class: "btn btn-primary") do %>
+          <span class="glyphicon glyphicon-tag"></span> <%= cat.name %>
+          <% end %>
+        <% end %>
+      </span>
 
       <span class="price">
       	<%= number_to_currency(lesson.price) %> </br>

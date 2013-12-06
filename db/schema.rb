@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205141649) do
+ActiveRecord::Schema.define(:version => 20131205185702) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20131205141649) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "lessons", ["latitude", "longitude"], :name => "index_lessons_on_latitude_and_longitude"
   add_index "lessons", ["user_id", "created_at"], :name => "index_lessons_on_user_id_and_created_at"
   add_index "lessons", ["user_id", "price"], :name => "index_lessons_on_user_id_and_price"
 

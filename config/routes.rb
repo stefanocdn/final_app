@@ -1,5 +1,7 @@
 FinalApp::Application.routes.draw do
 
+  get 'categories/:tag', to: 'lessons#index', as: :tag
+  
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :lessons

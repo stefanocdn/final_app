@@ -9,5 +9,14 @@
 	</h1>
 	</section>
   </aside><!-- aside span4 -->
+  <div class="col-md-8">
+  	<% if @user.lessons.any? %>
+  	<h3>Lessons (<%= @user.lessons.count %>)</h3>
+  	<ol class="lessons">
+  	  <%= render @lessons %>
+  	</ol>
+  	<%= will_paginate @lessons, renderer: BootstrapPagination::Rails %>
+  	<% end %>
+  </div><!-- div col-md-8 -->
 </div><!-- row -->
 </div><!-- container -->
