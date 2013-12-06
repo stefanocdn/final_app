@@ -4,6 +4,9 @@ class LessonsController < ApplicationController
                 only: [:new, :edit, :create, :destroy]
     before_filter :correct_user, only: [:edit, :update, :destroy]
 
+    # returns Geocoder::Result object
+	result = request.location
+
 	def index
 	  if params[:tag]
     	@lessons = Lesson.tagged_with(params[:tag]).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
@@ -11,7 +14,7 @@ class LessonsController < ApplicationController
       	@lessons = Lesson.near(params[:location], 5, :order => :distance).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
       	render json: @lessons.map(&:city)
       else
-	    @lessons = Lesson.text_search(params[:search]).near(request.location, 1).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
+	    @lessons = Lesson.text_search(params[:search]).near(result.address, 1).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
 	  end
 	  @hash = Gmaps4rails.build_markers(@lessons.with_address) do |lesson, marker|
 		marker.lat lesson.latitude
