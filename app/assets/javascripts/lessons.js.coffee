@@ -3,5 +3,8 @@ jQuery ->
   theme: 'facebook',
   prePopulate: $('#lesson_category_tokens').data('load'))
 
-  $('#query').autocomplete
-    source: $('#query').data('autocomplete-source')
+  $('#search').autocomplete
+    source: $('#search').data('autocomplete-source')
+
+  $('#location').autocomplete
+    source: $('#location').data('autocomplete-source')

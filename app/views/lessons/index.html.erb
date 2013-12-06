@@ -6,7 +6,7 @@
 <h1>All Lesson</h1>
 <%= form_tag lessons_path, :method => :get do %>
   <p>
-    <%= text_field_tag :location, params[:location] %>
+    <%= text_field_tag :location, params[:location], data: {autocomplete_source: lessons_path} %>
     <%= submit_tag "Search Near", :name => nil %>
 <% end %>
 

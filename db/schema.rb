@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205185702) do
+ActiveRecord::Schema.define(:version => 20131206063725) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -40,8 +40,14 @@ ActiveRecord::Schema.define(:version => 20131205185702) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "city"
+    t.string   "state"
+    t.string   "state_code"
+    t.string   "postal_code"
+    t.string   "country"
+    t.string   "country_code"
   end
 
   add_index "lessons", ["latitude", "longitude"], :name => "index_lessons_on_latitude_and_longitude"
