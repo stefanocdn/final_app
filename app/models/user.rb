@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_secure_password
   mount_uploader :avatar, AvatarUploader
 
+  # geocoded_by :ip_address,
+  # :latitude => :lat, :longitude => :lon
+  # after_validation :geocode
+
   has_many :lessons, dependent: :destroy
 
   # Callbacks
