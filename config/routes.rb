@@ -6,6 +6,7 @@ FinalApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :lessons
   resources :categories, only: [:index]
+  resources :reviews, only: [:index, :create, :destroy]
 
   root to: 'static_pages#home'
 

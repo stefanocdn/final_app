@@ -14,7 +14,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @lessons = @user.lessons.paginate(page: params[:page])
+    @lessons = @user.lessons.paginate(page: params[:page]).per_page(4)
+    @reverse_reviews = @user.reverse_reviews.paginate(page: params[:page]).per_page(4)
+    @reviews = @user.reviews.paginate(page: params[:page]).per_page(4)
   end
 
   def create

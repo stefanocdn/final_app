@@ -14,13 +14,22 @@ describe User do
   it { should respond_to(:last_name) }
   it { should respond_to(:email) }
   it { should respond_to(:birthday) }
+  it { should respond_to(:avatar) }
+  it { should respond_to(:gender) }
+  it { should respond_to(:summary) }
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:age) }
 
   it { should respond_to(:lessons) }
+
+  it { should respond_to(:reviews) }
+  it { should respond_to(:reviewed_users) }
+  it { should respond_to(:reverse_reviews) }
+  it { should respond_to(:reviewers) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -165,6 +174,53 @@ describe User do
         Lesson.find_by_id(lesson.id).should be_nil
       end
     end
+  end
 
+  describe "review association" do
+    let!(:reviewer) { FactoryGirl.create(:reviewer) }
+    let!(:reviewed) { FactoryGirl.create(:reviewed) }
+    # let!(:older_review) { reviewer.reviews.build(content: "Lorem ipsum",
+    #  reviewed_id: reviewed.id, created_at: 1.day.ago) }
+    # let!(:newer_review) { reviewer.reviews.build(content: "Lorem ipsum",
+    #  reviewed_id: reviewed.id, created_at: 1.hour.ago) }
+
+    let!(:older_review) do
+      FactoryGirl.create(:review, reviewer: reviewer,
+        reviewed: reviewed, created_at: 1.day.ago)
+    end
+    let!(:newer_review) do
+      FactoryGirl.create(:review, reviewer: reviewer,
+        reviewed: reviewed, created_at: 1.hour.ago)
+    end
+
+    it "should have the right reviews in the right order" do
+      reviewed.reverse_reviews.should == [newer_review, older_review]
+    end
+
+    it "should have the right reverse reviews in the right order" do
+      reviewer.reviews.should == [newer_review, older_review]
+    end
+
+    it "should destroy associated reviews" do
+      reviews = reviewer.reviews.dup
+      reverse_reviews = reviewed.reverse_reviews.dup
+      reviewer.destroy
+      reviews.should_not be_empty
+      reviews.each do |review|
+      Review.find_by_id(review.id).should be_nil
+      end
+      reverse_reviews.each do |review|
+      Review.find_by_id(review.id).should be_nil
+      end
+    end
+
+    it "should destroy associated reverse reviews" do
+      reverse_reviews = reviewed.reverse_reviews.dup
+      reviewed.destroy
+      reverse_reviews.should_not be_empty
+      reverse_reviews.each do |review|
+      Review.find_by_id(review.id).should be_nil
+      end
+    end
   end
 end

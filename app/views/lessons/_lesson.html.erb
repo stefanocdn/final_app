@@ -8,27 +8,25 @@
       <span class="user_info">
       <%= link_to image_tag(lesson.user.avatar_url.to_s, alt: lesson.user.to_s, class: "avatar", size: "150x150"), lesson.user %>
 
-        <h3><%= lesson.user.to_s %></h3>
+        <h4><%= lesson.user.to_s %></h4>
+        <span class="view_profile">
+          <small><i class="fa fa-eye"></i> <%= link_to "View Profile", lesson.user %></small>
+        </span> 
+      </span>
+      <span class="price">
+        <strong><%= number_to_currency(lesson.price) %></strong>per hour
       </span>
       <span class="category">
         <% lesson.categories.each do |cat| %>
-          <%= link_to(tag_path(cat.name), class: "btn btn-primary") do %>
-          <span class="glyphicon glyphicon-tag"></span> <%= cat.name %>
+          <%= link_to(tag_path(cat.name), class: "btn btn-default btn-xs") do %>
+          <i class="fa fa-tag"></i> <%= cat.name %>
           <% end %>
         <% end %>
       </span>
-
-      <span class="price">
-      	<%= number_to_currency(lesson.price) %> </br>
-        <h5>per hour</h5>
-      </span>
-      <span class="content"><%= lesson.content %></span>
+      <span class="content"><small><%= lesson.content %></small></span>
       <span class="timestamp">
-      	Posted <%= time_ago_in_words(lesson.created_at) %> ago.
+      	<small>Posted <%= time_ago_in_words(lesson.created_at) %> ago.</small>
       </span>
-      <span class="view_profile">
-          <i class="fa fa-eye"></i> <%= link_to "View Profile", lesson.user %>
-        </span> 
     	<% if current_user?(lesson.user) %>
         <%= link_to "delete", lesson, method: :delete,
                                          data: { confirm: 'You sure?' },

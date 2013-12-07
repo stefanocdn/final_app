@@ -139,18 +139,18 @@ describe "Authentication" do
         # end
       end
 
-      # describe "in the Reviews controller" do
+      describe "in the Reviews controller" do
 
-      #   describe "submitting to the create action" do
-      #     before { post reviews_path }
-      #     specify { response.should redirect_to(signin_url) }
-      #   end
+        describe "submitting to the create action" do
+          before { post reviews_path }
+          specify { response.should redirect_to(signin_url) }
+        end
 
-      #   describe "submitting to the destroy action" do
-      #     before { delete review_path(FactoryGirl.create(:review)) }
-      #     specify { response.should redirect_to(signin_url) }
-      #   end
-      # end
+        describe "submitting to the destroy action" do
+          before { delete review_path(FactoryGirl.create(:review)) }
+          specify { response.should redirect_to(signin_url) }
+        end
+      end
 
 
       describe "in the Lessons controller" do

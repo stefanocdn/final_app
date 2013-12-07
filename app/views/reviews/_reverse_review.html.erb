@@ -1,0 +1,21 @@
+<li>
+
+<span class="avatar">
+<%= link_to image_tag(reverse_review.reviewer.avatar_url(:thumb), size: "50x50"), reverse_review.reviewer %>
+</span>
+
+<span class="rating">
+<%= render_stars(reverse_review.rating) %>
+</span>
+
+<span class="user">
+<%= link_to reverse_review.reviewer.to_s, reverse_review.reviewer %>
+</span>
+
+<span class="content"><%= reverse_review.content %></span>
+
+<span class="timestamp">
+	
+Reviewed <%= time_ago_in_words(reverse_review.created_at) %> ago.</span>
+
+</li>

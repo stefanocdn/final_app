@@ -1,22 +1,93 @@
 <% provide(:title, @user.to_s) %>
 <div class="container">
 <div class="row">
-  <aside class="col-md-4">
+  <aside class="col-md-3 col-md-offset-1">
 	<section>
-	<h1>
-	<%= image_tag(@user.avatar_url.to_s, alt: @user.to_s, class: "avatar") %>
-	<%= @user.to_s %>
-	</h1>
+	<%= image_tag(@user.avatar_url.to_s, alt: @user.to_s, class: "avatar img-thumbnail") %>
+  <hr>
+	<h2><%= @user.to_s %></h2>
+  <%= @user.age %>
+  <i class="fa fa-clock-o"></i> Member since <%= @user.created_at.strftime("%B %Y") %>
+  <hr>
+  <i class="fa fa-thumbs-o-up"></i> Positively Reviewed: <%= @user.reverse_reviews.unscoped.recommendations.count %>
 	</section>
+  <section>
+    
+  </section>
   </aside><!-- aside span4 -->
-  <div class="col-md-8">
-  	<% if @user.lessons.any? %>
-  	<h3>Lessons (<%= @user.lessons.count %>)</h3>
-  	<ol class="lessons">
-  	  <%= render @lessons %>
-  	</ol>
-  	<%= will_paginate @lessons, renderer: BootstrapPagination::Rails %>
-  	<% end %>
+  <div class="col-md-7">
+
+  <div class="panel panel-default">
+  <div class="panel-heading">
+  <h3 class="panel-title">Hey, I'm <%= @user.first_name %></h3>
+  </div><!-- /panel-heading -->
+  <div class="panel-body">
+  <%= @user.summary %>
+  </div><!-- /panel-body -->
+  </div><!-- /panel-defautl -->
+  <div class="panel panel-default">
+  <div class="panel-body">
+    <span class="fa-stack fa-lg">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-thumbs-o-up fa-stack-1x fa-inverse"></i></span>
+  <span class="fa-stack fa-lg">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-thumbs-o-up fa-stack-1x fa-flip-horizontal fa-inverse"></i>
+    </span>
+  </div><!-- /panel-body -->
+  </div><!-- /panel-defautl -->
+  <% unless current_user?(@user) %>  
+  <section class="reviewform">
+  <button class="btn btn-primary"><i class="fa fa-plus"></i> Write a review</button>
+  <div class="add_review">
+  <%= render 'users/review_form' if signed_in? %>
+  </div>
+  </section><!-- /review button -->
+  <% end %>
+
+  <!-- NAV TABS -->
+  <ul class="nav nav-tabs">
+    <li><a href="#reviews" data-toggle="tab"><i class="fa fa-quote-right"></i> Reviews</a></li>
+    <li><a href="#profile" data-toggle="tab"><i class="fa fa-user"></i> Profile</a></li>
+    <li><a href="#lessons" data-toggle="tab"><i class="fa fa-calendar"></i> Lessons</a></li>
+  </ul>
+
+  <!-- TAB PANES -->
+  <div class="tab-content">
+  <div class="tab-pane active" id="reviews">
+    <!-- REVIEWS RECEIVED -->
+    <h6><i class="fa fa-pencil-square-o"></i> Reviews Received (<%= @user.reverse_reviews.count %>)</h6>
+    <% if @user.reverse_reviews.any? %>
+    <ul class="reviews">
+      <%= render partial: 'reviews/reverse_review', collection: @reverse_reviews %>
+    </ul>
+    <%= will_paginate @reverse_reviews, renderer: BootstrapPagination::Rails %>
+    <% end %>
+    <hr>
+    <!-- REVIEWS MADE -->
+    <h6><i class="fa fa-pencil-square-o"></i> Reviews Made (<%= @user.reviews.count %>)</h6>
+    <% if @user.reviews.any? %>
+    <ul class="reviews">
+      <%= render @reviews %>
+    </ul>
+    <%= will_paginate @reviews, renderer: BootstrapPagination::Rails %>
+    <% end %>
+  </div>
+  <div class="tab-pane" id="profile">
+    Here is gonna be the profile
+  </div>
+  <div class="tab-pane" id="lessons">
+    <!-- OWN LESSONS -->
+    <% if @user.lessons.any? %>
+    <h4>Lessons (<%= @user.lessons.count %>)</h4><hr>
+    <ol class="lessons">
+      <%= render @lessons %>
+    </ol>
+    <%= will_paginate @lessons, renderer: BootstrapPagination::Rails %>
+    <% end %>
+  </div>
+  </div><!-- /tab-content -->
+
   </div><!-- div col-md-8 -->
 </div><!-- row -->
 </div><!-- container -->

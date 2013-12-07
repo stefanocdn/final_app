@@ -4,6 +4,7 @@ class Lesson < ActiveRecord::Base
 
   scope :recent, order('lessons.created_at DESC')
   scope :with_address, where('longitude IS NOT ? AND latitude IS NOT ?', nil, nil)
+  
   # Geocoding
   geocoded_by :address
   after_validation :geocode, :if => :address_changed?

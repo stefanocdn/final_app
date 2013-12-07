@@ -81,19 +81,19 @@ describe "User pages" do
     let!(:l1) { FactoryGirl.create(:lesson, user: user) }
     let!(:l2) { FactoryGirl.create(:lesson, user: user) }
 
+    let!(:r1) { FactoryGirl.create(:review, reviewer: user,
+        reviewed: user2) }
+    let!(:r2) { FactoryGirl.create(:review, reviewer: user,
+        reviewed: user2) }
+    let!(:r3) { FactoryGirl.create(:review, reviewer: user2,
+        reviewed: user) }
+    let!(:r4) { FactoryGirl.create(:review, reviewer: user2,
+        reviewed: user) }
+
     before { visit user_path(user) }
 
-    it { should have_selector('h1',    text: user.to_s) }
+    it { should have_selector('h2',    text: user.to_s) }
     it { should have_selector('title', text: user.to_s) }
-
-    # describe "group count" do
-    # let(:group) { FactoryGirl.create(:group) }
-    #   before do
-    #     user.join!(group)
-    #     visit user_path(user)
-    #   end
-    #   it { should have_link("1 groups", href: group_user_path(user)) }
-    # end
 
     describe "lessons" do
       it { should have_content(l1.title) }
@@ -103,6 +103,18 @@ describe "User pages" do
       it { should have_content(l2.content) }
       it { should have_content(l2.price) }
       it { should have_content(user.lessons.count) }
+    end
+
+    describe "reviews made" do
+      it { should have_content(r1.content) }
+      it { should have_content(r2.content) }
+      it { should have_content(user.reviews.count) }
+    end
+
+    describe "reverse reviews" do
+      it { should have_content(r3.content) }
+      it { should have_content(r4.content) }
+      it { should have_content(user.reverse_reviews.count) }
     end
   end
 

@@ -1,21 +1,25 @@
 class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :birthday,
-   :password, :password_confirmation, :avatar
+   :password, :password_confirmation, :avatar, :summary, :gender
 
   has_secure_password
   mount_uploader :avatar, AvatarUploader
 
-  # geocoded_by :ip_address,
-  # :latitude => :lat, :longitude => :lon
-  # after_validation :geocode
-
+  # LESSONS
   has_many :lessons, dependent: :destroy
 
-  # Callbacks
+  # REVIEWS
+  has_many :reviews, foreign_key: "reviewer_id", dependent: :destroy
+  has_many :reviewed_users, through: :reviews, source: :reviewed
+  has_many :reverse_reviews, foreign_key: "reviewed_id",
+                class_name: "Review", dependent: :destroy
+  has_many :reviewers, through: :reverse_reviews
+  
+  # CALLBACKS
   before_save { email.downcase! }
   before_save :create_remember_token
 
-  # Validations
+  # VALIDATIONS
   validates :first_name,  presence: true, length: { maximum: 30 }
   validates :last_name,  presence: true, length: { maximum: 30 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -27,6 +31,10 @@ class User < ActiveRecord::Base
 
   def to_s
     "#{first_name} #{last_name}"
+  end
+
+  def age
+    Time.now.year - birthday.year if birthday?
   end
 
   private

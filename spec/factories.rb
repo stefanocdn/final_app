@@ -9,6 +9,11 @@ FactoryGirl.define do
     factory :admin do
       admin true
     end
+    factory :reviewer do
+    end
+
+    factory :reviewed do
+    end
   end
 
   factory :lesson do
@@ -20,5 +25,12 @@ FactoryGirl.define do
 
   factory :category do
     name "Math"
+  end
+
+  factory :review do
+    content "Lorem ipsum"
+    reviewer
+    reviewed
+    rating 4
   end
 end

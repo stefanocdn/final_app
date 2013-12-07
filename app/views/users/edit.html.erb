@@ -15,8 +15,20 @@
 <%= f.password_field :password %><br/>
 <%= f.label :password_confirmation, "Confirm Password" %>
 <%= f.password_field :password_confirmation %><br/>
+<%= f.label :summary %>
+<%= f.text_area :summary, placeholder: "Write a summary about you", rows: 3 %><br/>
 <%= f.label :birthday %>
-<%= f.date_select :birthday %><br />
+<%= f.date_select :birthday,
+  {:start_year => Time.now.year,
+  :end_year => 1900,
+  :use_short_month => true,
+  :order => [:month, :day, :year],
+  :prompt => {:month => 'Month', :day => 'Day', :year => 'Year'}},
+  {:class => 'year',
+  :id => 'user_birthday'}
+%><br />
+<%= f.label :gender, "You are" %>
+<%= f.select :gender, %w{ Male Female }, :prompt => "Gender" %><br/>
 <%= f.file_field :avatar %><br/>
 <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 <% end %>

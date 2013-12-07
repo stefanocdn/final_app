@@ -13,6 +13,12 @@ let(:user) { FactoryGirl.create(:user) }
   it { should respond_to(:content) }
   it { should respond_to(:price) }
   it { should respond_to(:address) }
+  it { should respond_to(:city) }
+  it { should respond_to(:state) }
+  it { should respond_to(:state_code) }
+  it { should respond_to(:postal_code) }
+  it { should respond_to(:country) }
+  it { should respond_to(:country_code) }
   it { should respond_to(:longitude) }
   it { should respond_to(:latitude) }
   it { should respond_to(:categorizations) }
