@@ -14,9 +14,8 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.tokeninput
+//= jquery.ui.addresspicker
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
-//= http://maps.google.com/maps/api/js?sensor=false
-//= jquery.ui.addresspicker
 //= require_tree .
