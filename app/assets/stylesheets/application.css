@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require token-input-facebook
+ *= require jquery.ui.all
  *= require_tree .
  */
