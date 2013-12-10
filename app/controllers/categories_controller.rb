@@ -7,4 +7,9 @@ class CategoriesController < ApplicationController
 	  format.json { render json: @categories.tokens(params[:q]) }
 	end
   end
+
+  def search_suggestion
+	@categories = Category.order(:name).where("name ilike ?", "%#{params[:term]}%")
+    render json: @categories.map(&:name)
+  end
 end

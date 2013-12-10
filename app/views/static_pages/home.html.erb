@@ -1,10 +1,166 @@
-<h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<%= stylesheet_link_tag "jquery.ui.all" %>
+<blockquote>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+</blockquote>
+
+<div class="container">
+<div class="row">
+
+<div class="col-md-7">
+<h1>Find a tutor</h1>
+<h2>Browse through different subjects</h2>
 <%= form_tag lessons_path, method: :get do %>
 <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
   <p>
-    <%= text_field_tag :search, params[:search],  data: {autocomplete_source: Category.order(:name).map(&:name)} %>
-    <%= submit_tag "Search", name: nil %>
+    <%= text_field_tag :search, params[:search], placeholder: "Enter a subject or a location", data: {autocomplete_source: search_suggestion_categories_path} %>
+    <%= submit_tag "Search", class: "btn btn-primary", name: nil %>
   </p>
 <% end %>
+</div>
+<!-- Carousel
+    ================================================== -->
+<div id="myCarousel" class="col-md-5 carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="item active text-center">
+      <section>
+      </section>
+
+      <section>
+        
+      </section>
+      <hr>
+      <section>
+      <p><i class="fa fa-quote-left"></i>  <i class="fa fa-quote-right"></i></p>
+      </section>
+    </div>
+
+    <div class="item text-center">
+      <section>
+      </section>
+
+      <section>
+      </section>
+      <hr>
+      <section>
+      <p><i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="fa fa-quote-right"></i></p>
+      </section>
+    </div>
+    <div class="item text-center">
+      <section>
+      </section>
+
+      <section>
+      </section>
+      <hr>
+      <section>
+      <p><i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="fa fa-quote-right"></i></p>
+      </section>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+</div><!-- /.carousel -->
+</div>
+</div>
+
+<div class="page-header text-center">
+<h2>DO GOOD <small>HOW IT WORKS?</small></h2>
+</div>
+<h3 class="text-center">Help your children and those of someone who needs it even more <a class="btn btn-success btn-sm" href="#">Learn more <i class="fa fa-chevron-right"></i></a></h3>
+<hr>
+
+<div class="container marketing">
+<div class="row">
+
+<div class="col-md-4 homemd4">
+  <span class="fa-stack fa-5x">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-stack-1x fa-search fa-inverse"></i>
+  </span>
+  <h3>FIND</h3>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+</div>
+
+<div class="col-md-4 homemd4">
+<span class="fa-stack fa-5x">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-stack-1x fa-thumbs-o-up fa-inverse"></i>
+</span>
+<h3>REVIEW</h3>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+</div>
+
+<div class="col-md-4 homemd4">
+  <span class="fa-stack fa-5x">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-stack-1x fa-globe fa-inverse"></i>
+  </span>
+  <h3>HELP</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+</div>
+
+</div><!-- row -->
+</div><!-- contiainer -->
+
+<div class="container">
+  <hr>
+  <h3>FOLLOW US: </h3>
+<span class="fa-stack fa-lg fa-hover">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
+</span>
+
+<a href="<%= help_path %>">
+<span class="fa-stack fa-lg fa-hover">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-facebook fa-stack-1x"></i>
+</span>
+</a>
+
+<span class="fa-stack fa-lg">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-google-plus fa-stack-1x"></i>
+</span>
+<hr>
+</div>

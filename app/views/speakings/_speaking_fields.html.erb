@@ -1,0 +1,3 @@
+<%= f.label :language_name %>
+<%= f.text_field :language_name, data: {autocomplete_source: languages_path} %><br/>
+<%= f.submit "Save Language", class: "btn btn-xs btn-primary" %>

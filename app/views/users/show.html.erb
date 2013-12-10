@@ -6,10 +6,12 @@
 	<%= image_tag(@user.avatar_url.to_s, alt: @user.to_s, class: "avatar img-thumbnail") %>
   <hr>
 	<h2><%= @user.to_s %></h2>
-  <%= @user.age %>
-  <i class="fa fa-clock-o"></i> Member since <%= @user.created_at.strftime("%B %Y") %>
+  <%= render 'message_form' if signed_in? %> </br>
+  <small>
+  <h7><i class="fa fa-user"></i> <%= @user.try(:age) || "Age not filled" %></h7></br>
+  <i class="fa fa-clock-o"></i> Member since <%= @user.created_at.strftime("%B %Y") %></small>
   <hr>
-  <i class="fa fa-thumbs-o-up"></i> Positively Reviewed: <%= @user.reverse_reviews.unscoped.recommendations.count %>
+  <i class="fa fa-thumbs-o-up"></i> Positively Reviewed: <%= @user.try(:reverse_reviews).unscoped.recommendations.size %>
 	</section>
   <section>
     
@@ -19,7 +21,7 @@
 
   <div class="panel panel-default">
   <div class="panel-heading">
-  <h3 class="panel-title">Hey, I'm <%= @user.first_name %></h3>
+  <h3 class="panel-title"><h4><i class="fa fa-info-circle"></i> Hey, I'm <%= @user.first_name %></h3>
   </div><!-- /panel-heading -->
   <div class="panel-body">
   <%= @user.summary %>
@@ -74,7 +76,27 @@
     <% end %>
   </div>
   <div class="tab-pane" id="profile">
-    Here is gonna be the profile
+    <!-- PROFILE SCHOL, POSI, LANGUAGES -->
+    <h4><i class="fa fa-book"></i> Education</h4><hr>
+    <% if @user.scholarships.any? %>
+    <ul class="scholarships">
+      <%= render @scholarships %>
+    </ul>
+    <% end %>
+    <hr>
+    <h4><i class="fa fa-briefcase"></i> Positions</h4><hr>
+    <% if @user.positions.any? %>
+    <ul class="positions">
+      <%= render @positions %>
+    </ul>
+    <% end %>
+    <hr>
+    <h4><i class="fa fa-bullhorn"></i> Languages</h4><hr>
+    <% if @user.languages.any? %>
+    <ul class="speakings">
+      <%= render @languages %>
+    </ul><% end %>
+    <hr>
   </div>
   <div class="tab-pane" id="lessons">
     <!-- OWN LESSONS -->

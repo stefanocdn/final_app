@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_filter :admin_user,     only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.text_search(params[:search]).paginate(page: params[:page])
   end
 
   def new
@@ -17,6 +17,9 @@ class UsersController < ApplicationController
     @lessons = @user.lessons.paginate(page: params[:page]).per_page(4)
     @reverse_reviews = @user.reverse_reviews.paginate(page: params[:page]).per_page(4)
     @reviews = @user.reviews.paginate(page: params[:page]).per_page(4)
+    @scholarships = @user.scholarships
+    @positions = @user.positions
+    @languages = @user.languages
   end
 
   def create
@@ -32,6 +35,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @scholarships = @user.scholarships
+    @positions = @user.positions
+    @languages = @user.languages
   end
 
   def update

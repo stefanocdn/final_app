@@ -1,0 +1,12 @@
+<li>
+<span class="company"><h3><%= position.company_name %></h3></span>
+<span class="location"><h4><%= position.city %>, <%= position.country %></h4></span>
+<span class="timestamp">
+<%= position.start_date.strftime("%Y") %> - <%= position.end_date.strftime("%Y") %>
+</span>
+<% if current_user?(position.user) %>
+<%= link_to "delete", position, method: :delete,
+data: { confirm: "You sure?" },
+title: position.school.name %>
+<% end %>
+</li>

@@ -118,26 +118,53 @@ describe "User pages" do
     end
   end
 
-  # describe "profile page, education and professional" do
-  #   let(:user) { FactoryGirl.create(:user) }
-  #   let!(:s1) { FactoryGirl.create(:scholarship, user: user, degree: "Bachelor", field: "Eco", school_name: "HEC") }
-  #   let!(:s2) { FactoryGirl.create(:scholarship, user: user, degree: "Masters", field: "Math", school_name: "X") }
+  describe "profile page, education and professional" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:school1) { FactoryGirl.create(:school) }
+    let(:school2) { FactoryGirl.create(:school) }
+    let!(:s1) { FactoryGirl.create(:scholarship, user: user, school: school1) }
+    let!(:s2) { FactoryGirl.create(:scholarship, user: user, school: school2) }
 
-  #   before { visit user_path(user) }
-  #   before { click_link "Profile" }
+    let(:company1) { FactoryGirl.create(:company) }
+    let(:company2) { FactoryGirl.create(:company) }
+    let!(:p1) { FactoryGirl.create(:position, user: user, company: company1) }
+    let!(:p2) { FactoryGirl.create(:position, user: user, company: company2) }
 
-  #   it { should have_selector('h4', text: "Education") }
-  #   it { should have_selector('h4', text: "Positions") }
+    let(:lang1) { FactoryGirl.create(:language) }
+    let(:lang2) { FactoryGirl.create(:language) }
+    let!(:spe1) { FactoryGirl.create(:speaking, user: user, language: lang1) }
+    let!(:spe2) { FactoryGirl.create(:speaking, user: user, language: lang2) }
 
-  #   describe "scholarships" do
-  #     it { should have_content(s1.degree) }
-  #     it { should have_content(s2.degree) }
-  #     it { should have_content(s1.field) }
-  #     it { should have_content(s2.field) }
-  #     it { should have_content(s1.school.name) }
-  #     it { should have_content(s2.school.name) }
-  #   end
-  # end
+    before { visit user_path(user) }
+    # before { click_link "Profile" }
+
+    it { should have_selector('h4', text: "Education") }
+    it { should have_selector('h4', text: "Positions") }
+    it { should have_selector('h4', text: "Languages") }
+
+    describe "scholarships" do
+      it { should have_content(s1.degree) }
+      it { should have_content(s2.degree) }
+      it { should have_content(s1.field) }
+      it { should have_content(s2.field) }
+      it { should have_content(s1.school.name) }
+      it { should have_content(s2.school.name) }
+    end
+
+    describe "positions" do
+      it { should have_content(p1.city) }
+      it { should have_content(p2.city) }
+      it { should have_content(p1.country) }
+      it { should have_content(p2.country) }
+      it { should have_content(p1.company.name) }
+      it { should have_content(p2.company.name) }
+    end
+
+    describe "speakings" do
+      it { should have_content(lang1.name) }
+      it { should have_content(lang2.name) }
+    end
+  end
 
   describe "signup page" do
     before { visit signup_path }

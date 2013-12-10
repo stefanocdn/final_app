@@ -1,12 +1,25 @@
 FinalApp::Application.routes.draw do
 
-  get 'categories/:tag', to: 'lessons#index', as: :tag
+  get 'tags/:tag', to: 'lessons#index', as: :tag
   
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :lessons
-  resources :categories, only: [:index]
+  resources :lessons do
+    get :location_suggestion, on: :collection
+  end
+  resources :categories, only: [:index] do
+    get :search_suggestion, on: :collection
+  end
   resources :reviews, only: [:index, :create, :destroy]
+
+  resources :scholarships, only: [:create, :destroy]
+  resources :schools, only: [:index]
+  resources :positions, only: [:create, :destroy]
+  resources :companies, only: [:index]
+  resources :speakings, only: [:create, :destroy]
+  resources :languages, only: [:index]
+
+  resources :messages, only: [:index, :create, :destroy]
 
   root to: 'static_pages#home'
 

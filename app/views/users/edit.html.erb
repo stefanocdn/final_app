@@ -1,8 +1,88 @@
 <% provide(:title, "Edit user") %>
+<%= stylesheet_link_tag "jquery.ui.all" %>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag "jquery.ui.addresspicker" %>
+<script>
+        $(function() {
+                var addresspicker = $( "#addresspicker" ).addresspicker({
+      componentsFilter: 'country:FR'
+    });
+</script>
 <div class="container">
 <h1>Update your profile</h1>
 <div class="row">
-<div class="col-md-6 col-md-offset-3">
+<div class="col-md-3">
+	<ul class="nav nav-stacked">
+	<li><a href="#profile" data-toggle="tab">
+	  <i class="fa fa-user"></i> Profile</a></li>
+	<li><a href="#picture" data-toggle="tab">
+	  <i class="fa fa-picture-o"></i> My Picture</a></li>
+	<li><a href="#general_info" data-toggle="tab">
+	  <i class="fa fa-cog"></i> General Info</a></li>
+	</ul><br/>
+	<a href="<%= user_path(current_user) %>" class="btn btn-default">
+          <i class="fa fa-reply"> Back to profile</i></a>
+</div>
+<div class="col-md-6 col-md-offset-1">
+<div class="tab-content"><!-- Content -->
+<div class="tab-pane active" id="profile"><!-- First tab -->
+<h4><i class="fa fa-info-circle"></i> Write something about you</h4><hr>
+<%= form_for(@user) do |f| %>
+<%= f.label :summary %>
+<%= f.text_area :summary, placeholder: "Write a summary about you", rows: 3 %><br/>
+<%= f.submit "Save Summary", class: "btn btn-xs btn-primary" %>
+<% end %><hr>
+
+<div class="education-toggle">
+<h4><i class="fa fa-book"></i> Education</h4><hr>
+<button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Add education</button><br/>
+<div class="add_education">
+<%= form_for(current_user.scholarships.build) do |f| %>
+<%= render '/scholarships/scholarship_fields', f: f %>
+<% end %>
+</div><br/>
+<% if @user.scholarships.any? %>
+<ul class="scholarships">
+<%= render @scholarships %>
+</ul>
+<% end %><hr></div>
+<div class="position-toggle">
+<h4><i class="fa fa-briefcase"></i> Positions</h4><hr>
+<button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Add Position</button><br/>
+<div class="add_position">
+<%= form_for(current_user.positions.build) do |f| %>
+<%= render '/positions/position_fields', f: f %>
+<% end %>
+</div><br/>
+<% if @user.positions.any? %>
+<ul class="positions">
+<%= render @positions %>
+</ul>
+<% end %><hr></div>
+<div class="language-toggle">
+<h4><i class="fa fa-bullhorn"></i> Languages</h4><hr>
+<button class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Add Languages</button><br/>
+<div class="add_language">
+<%= form_for(current_user.speakings.build) do |f| %>
+<%= render '/speakings/speaking_fields', f: f %>
+<% end %><br/>
+</div>
+<% if @user.languages.any? %>
+<ul class="languages">
+<%= render @languages %>
+</ul>
+<% end %>
+</div>
+
+</div><!-- /profile -->
+<div class="tab-pane" id="picture"><!-- second Tab -->
+<%= image_tag(@user.avatar_url.to_s, alt: @user.to_s, class: "avatar img-thumbnail") %>
+<%= form_for(@user, :html => {:multipart => true}) do |f| %>
+<%= f.file_field :avatar %><br/>
+<%= f.submit "Save Picture", class: "btn btn-large btn-primary" %>
+<% end %>
+</div><!-- /picture -->
+<div class="tab-pane" id="general_info"><!-- third tab -->
 <%= form_for(@user, :html => {:multipart => true}) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 <%= f.label :first_name, "First Name" %>
@@ -15,8 +95,6 @@
 <%= f.password_field :password %><br/>
 <%= f.label :password_confirmation, "Confirm Password" %>
 <%= f.password_field :password_confirmation %><br/>
-<%= f.label :summary %>
-<%= f.text_area :summary, placeholder: "Write a summary about you", rows: 3 %><br/>
 <%= f.label :birthday %>
 <%= f.date_select :birthday,
   {:start_year => Time.now.year,
@@ -29,8 +107,10 @@
 %><br />
 <%= f.label :gender, "You are" %>
 <%= f.select :gender, %w{ Male Female }, :prompt => "Gender" %><br/>
-<%= f.file_field :avatar %><br/>
 <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 <% end %>
-</div>
-</div>
+</div><!-- /general_info -->
+</div><!-- /Tab Content -->
+</div><!-- /col-md -->
+</div><!-- /row -->
+</div><!-- /container -->

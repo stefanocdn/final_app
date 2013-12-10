@@ -1,29 +1,29 @@
 class Lesson < ActiveRecord::Base
   attr_accessible :address, :content, :latitude, 
-    :longitude, :price, :title, :category_tokens
+    :longitude, :price, :title, :category_tokens, :state, :country, :postal_code
 
   scope :recent, order('lessons.created_at DESC')
   scope :with_address, where('longitude IS NOT ? AND latitude IS NOT ?', nil, nil)
   
   # Geocoding
   geocoded_by :address
-  after_validation :geocode, :if => :address_changed?
+  # after_validation :geocode, :if => :address_changed?
   # reverse_geocoded_by :latitude, :longitude, :address => :address
   # reverse_geocoded_by :latitude, :longitude, {:address => :address,
   #  :city => :city, :state => :state, :state_code => :state_code,
   #  :postal_code => :postal_code, :country => :country, :country_code => :country_code}
-  reverse_geocoded_by :latitude, :longitude do |obj,results|
-  if geo = results.first
-    obj.address = geo.address
-    obj.city    = geo.city
-    obj.state    = geo.state
-    obj.state_code    = geo.state_code
-    obj.postal_code = geo.postal_code
-    obj.country = geo.country
-    obj.country_code = geo.country_code
-    end
-  end
-  after_validation :reverse_geocode 
+  # reverse_geocoded_by :latitude, :longitude do |obj,results|
+  # if geo = results.first
+  #   obj.address = geo.address
+  #   obj.city    = geo.city
+  #   obj.state    = geo.state
+  #   obj.state_code    = geo.state_code
+  #   obj.postal_code = geo.postal_code
+  #   obj.country = geo.country
+  #   obj.country_code = geo.country_code
+  #   end
+  # end
+  # after_validation :reverse_geocode 
 
   belongs_to :user
   has_many :categorizations, dependent: :destroy

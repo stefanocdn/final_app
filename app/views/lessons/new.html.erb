@@ -1,24 +1,92 @@
 <% provide(:title, 'New Lesson') %>
+<%= stylesheet_link_tag "jquery.ui.all" %>
+<%= stylesheet_link_tag "demo" %>
 
-<div class="container">
-<h1>Post a new lesson</h1>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<%= javascript_include_tag "jquery.ui.addresspicker" %>
+<script>
+        $(function() {
+                var addresspicker = $( "#addresspicker" ).addresspicker({
+      componentsFilter: 'country:FR'
+    });
+                var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+                        regionBias: "fr",
+      updateCallback: showCallback,
+                  elements: {
+                    map:      "#map",
+                    city:   "#value", 
+                    lat:      "#lat",
+                    lng:      "#lng",
+                    street_number: '#street_number',
+                    route: '#route',
+                    locality: '#locality',
+                    administrative_area_level_2: '#administrative_area_level_2',
+                    administrative_area_level_1: '#administrative_area_level_1',
+                    country:  '#country',
+                    postal_code: '#postal_code',
+        type:    '#type'
+                  }
+                });
+
+                var gmarker = addresspickerMap.addresspicker( "marker");
+                gmarker.setVisible(true);
+                addresspickerMap.addresspicker( "updatePosition");
+
+    $('#reverseGeocode').change(function(){
+      $("#addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
+    });
+
+    function showCallback(geocodeResult, parsedGeocodeResult){
+      $('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+    }
+
+        });
+</script>
+<div class="container newlesson">
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-6 col-md-offset-3">
+<h1>Post a new lesson</h1><hr>
+
 <%= form_for(@lesson) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
+<div class="field">
 <%= f.label :title %>
-<%= f.text_field :title %><br/>
+<%= f.text_field :title, placeholder: "Summary of the lesson" %><br/>
+</div>
+<div class="field">
 <%= f.label :category_tokens, "Categories" %>
-<%= f.text_field :category_tokens %><br/>
-<%= f.label :address %>
-<%= f.text_field :address %><br/>
+<%= f.text_field :category_tokens, placeholder: "e.g. Maths / Cooking / Spanish etc.." %><br/>
+</div>
+<div class="field">
 <%= f.label :content %>
-<%= f.text_area :content, :size => "25x10" %><br/>
+<%= f.text_area :content, :size => "5x5", placeholder: "Main description of the lesson" %><br/>
+</div>
+<div class="field">
 <%= f.label :price, 'Price per hour' %>
-<%= f.number_field :price, :min => 0 %><br/>
+<%= f.number_field :price, :min => 0, placeholder: "e.g. 30" %><br/>
+</div>
 
-<%= f.submit "Create my lesson", class: "btn btn-large btn-primary" %>
+
+<div class="#demo">
+<div class='clearfix'>
+<div class='map-wrapper'>
+<div id="map"></div>
+</div>
+</div>
+<div class='input input-positioned'>
+<%= f.label :address %>
+<%= f.text_field :address, id: "addresspicker_map" %><br/>
+<%= f.hidden_field :latitude, id: "lat" %>
+<%= f.hidden_field :longitude, id: "lng" %>
+<%= f.hidden_field :state, id: "administrative_area_level_1" %>
+<%= f.hidden_field :country, id: "country" %>
+<%= f.hidden_field :postal_code, id: "postal_code" %>
+</div>
+
+</div><!-- End demo -->
+<hr>
+<%= f.submit "Create my lesson", class: "btn btn-lg btn-primary" %>
 <% end %>
 </div><!-- col-md-6 -->
 </div><!-- row -->
-</div><!-- container -->
+</div><!-- Container -->

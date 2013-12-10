@@ -5,8 +5,13 @@ class User < ActiveRecord::Base
   has_secure_password
   mount_uploader :avatar, AvatarUploader
 
+  scope :male, where('gender IS ?', "male")
+
   # LESSONS
   has_many :lessons, dependent: :destroy
+
+  # Messages
+  has_many :messages, dependent: :destroy
 
   # REVIEWS
   has_many :reviews, foreign_key: "reviewer_id", dependent: :destroy
@@ -14,6 +19,14 @@ class User < ActiveRecord::Base
   has_many :reverse_reviews, foreign_key: "reviewed_id",
                 class_name: "Review", dependent: :destroy
   has_many :reviewers, through: :reverse_reviews
+
+  # SCHOLARSHIPS, POSITIONS, LANGUAGE
+  has_many :schools, through: :scholarships
+  has_many :scholarships, dependent: :destroy
+  has_many :companies, through: :positions
+  has_many :positions, dependent: :destroy
+  has_many :languages, through: :speakings
+  has_many :speakings, dependent: :destroy
   
   # CALLBACKS
   before_save { email.downcase! }
@@ -28,6 +41,20 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }, :unless => :password_not_required?
   validates :password_confirmation, presence: true, :unless => :password_not_required?
   after_validation { self.errors.messages.delete(:password_digest) }
+
+  include PgSearch
+  pg_search_scope :search, against: [:first_name, :last_name, :summary],
+  using: {tsearch: {dictionary: "english"}},
+  # associated_against: {categories: [:name]},
+  :using => {:tsearch => {:prefix => true}}
+
+  def self.text_search(query)
+    if query.present?
+      search(query)
+    else
+      scoped
+    end
+  end
 
   def to_s
     "#{first_name} #{last_name}"

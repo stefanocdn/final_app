@@ -1,5 +1,124 @@
+$navbar-default-bg: #fff;
+
 @import "font-awesome";
 @import "bootstrap";
+
+@mixin box_sizing {
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+body {
+  padding-top: 80px;
+  // color: #5a5a5a;
+}
+.navbar-brand {
+  letter-spacing: 1px;
+  font-size: 1.7em;
+}
+// section {
+//   overflow: auto;
+// }
+// textarea {
+//   resize: vertical;
+// }
+// .center {
+//   text-align: center;
+//   h1 {
+//     margin-bottom: 10px;
+//   }
+// }
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+/* Pad the edges of the mobile views a bit */
+.marketing {
+  padding-left: 15px;
+  padding-right: 15px;
+  color: #5a5a5a;
+  .fa-stack.fa-5x {
+    color: #eee;
+  }
+  .fa-stack-1x {
+    // color: #fff;
+    font-size: 0.6em;
+  }
+}
+/* Center align the text within the three columns below the carousel */
+.marketing .col-md-4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.marketing h3 {
+  font-weight: normal;
+}
+.marketing .col-md-4 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.explanation {
+  h3 i {
+    margin-right: 5px;
+  }
+}
+// .fa-stack:hover .fa-twitter:before {
+//     content: "\f023";
+//     background-color: #eee;
+// }
+// .fa-stack:hover {
+//   -webkit-transform: scale3d(1.1, 1.1, 1.1);
+// }
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+/* Carousel base class */
+.carousel {
+  height: 500px;
+  margin-bottom: 60px;
+  position: relative;
+  width: 400px;
+  margin: auto;
+  padding: 5px;
+  border: 1px solid #eee;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 400px;
+  background-color: #fff;
+  padding: 10px 30px;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 200px;
+  width: 200px;
+}
+.carousel-control {
+ // position: absolute;
+ //  top: 0;
+ //  left: 0;
+ //  bottom: 0;
+  width: 0;
+ //  opacity: 0.5;
+ //  filter: alpha(opacity=50);
+ //  font-size: 20px;
+ //  color: white;
+ //  text-align: center;
+ //  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.carousel-indicators li {
+  border: 1px solid #b0b0b0;
+}
 
 /* SORTABLE ARROWS, LESSONS#INDEX */
 
@@ -32,33 +151,36 @@
 }
 
 /* AUTOCOMPLETE LIST */
-ul.ui-autocomplete {
-  position: absolute;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: solid 1px #999;
-  cursor: default;
-  li {
-    background-color: #FFF;
-    border-top: solid 1px #DDD;
-    margin: 0;
-    padding: 0;
-    a {
-      color: #000;
-      display: block;
-      padding: 3px;
-    }
-    a.ui-state-hover, a.ui-state-active {
-      background-color: #005580;
-    }
-  }
-}
+// ul.ui-autocomplete {
+//   position: absolute;
+//   list-style: none;
+//   margin: 0;
+//   padding: 0;
+//   border: solid 1px #999;
+//   cursor: default;
+//   li {
+//     background-color: #FFF;
+//     border-top: solid 1px #DDD;
+//     margin: 0;
+//     padding: 0;
+//     a {
+//       color: #000;
+//       display: block;
+//       padding: 3px;
+//     }
+//     a.ui-state-hover, a.ui-state-active {
+//       background-color: #005580;
+//     }
+//   }
+// }
 
 /* HIDE EDUCATION FORM */
 
 .add_review {
 display: none;
+}
+.add_education, .add_position, .add_language {
+  display: none;
 }
 
 /* RATING WITH STARS */
@@ -77,7 +199,7 @@ display: none;
 
 .rating:not(:checked) > label {
     float:right;
-    width:1em;
+    width:1.2em;
     padding:0 .1em;
     overflow:hidden;
     white-space:nowrap;
@@ -144,6 +266,15 @@ display: none;
   color: #999;
   }
 }
+/* REVIEW FORMS */
+.reviewform {
+  .rating {
+    float: right;
+  }
+  legend, .field, .btn {
+    margin-top: 10px;
+  }
+}
 /* LESSONS */
 .lessons {
   list-style: none;
@@ -151,6 +282,9 @@ display: none;
   .user_info {
   float: left;
   margin-right: 10px;
+  }
+  .location {
+    display: block;
   }
   .category {
     display: block;
@@ -172,4 +306,67 @@ display: none;
 /* LESSONS INDEX WITH MAP */
 .panel.panel-info {
   width: 400px;
+}
+/* USERS index */
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+  overflow: auto;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
+    &:last-child {
+    border-bottom: 1px solid #eee;
+    }
+  }
+}
+/* LESSONS NEW */
+.container.newlesson .col-md-6 {
+width: 44%;
+}
+form .field, #addresspicker_map {
+  label {
+  float: left;
+  font-size: 18px;
+  }
+  input, textarea, select, .uneditable-input {
+  width: 100%;
+  padding: 10px;
+  }
+  margin-bottom: 20px;
+}
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eee;
+  color: #999;
+  a {
+    color: #555;
+    &:hover {
+      color: #222;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
 }

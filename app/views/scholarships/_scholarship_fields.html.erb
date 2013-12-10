@@ -1,0 +1,17 @@
+<%= f.label :school_name %>
+<%= f.text_field :school_name, id:"addresspicker" %><br/>
+
+<%= f.label :degree, "Degree" %>
+<%= f.text_field :degree %><br/>
+
+<%= f.label :field, "Field of Study" %>
+<%= f.text_field :field %><br/>
+
+
+<%= f.label :start_date %>
+<%= f.date_select :start_date, discard_month: true, start_year: 1995 %><br />
+
+<%= f.label :end_date %>
+<%= f.date_select :end_date, discard_month: true, start_year: 1995  %><br />
+
+<%= f.submit "Save Education", class: "btn btn-xs btn-primary" %>

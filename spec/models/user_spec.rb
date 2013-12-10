@@ -31,6 +31,13 @@ describe User do
   it { should respond_to(:reverse_reviews) }
   it { should respond_to(:reviewers) }
 
+  it { should respond_to(:scholarships) }
+  it { should respond_to(:schools) }
+  it { should respond_to(:speakings) }
+  it { should respond_to(:languages) }
+  it { should respond_to(:positions) }
+  it { should respond_to(:companies) }
+
   it { should be_valid }
   it { should_not be_admin }
 
@@ -220,6 +227,74 @@ describe User do
       reverse_reviews.should_not be_empty
       reverse_reviews.each do |review|
       Review.find_by_id(review.id).should be_nil
+      end
+    end
+  end
+
+  describe "scholarships associations" do
+    before { @user.save }
+    let!(:school) { FactoryGirl.create(:school) }
+    let!(:older_scholarship) do
+      FactoryGirl.create(:scholarship, user: @user, school: school,
+       start_date: "1999-02-03", end_date: "2001-02-03")
+    end
+    let!(:newer_scholarship) do
+      FactoryGirl.create(:scholarship, user: @user, school: school,
+       start_date: "2002-02-03", end_date: "2004-02-03")
+    end
+    it "should have the right scholarships in the right order" do
+      @user.scholarships.should == [newer_scholarship, older_scholarship]
+    end
+
+    it "should destroy associated scholarships" do
+      scholarships = @user.scholarships.dup
+      @user.destroy
+      scholarships.should_not be_empty
+      scholarships.each do |sco|
+        Scholarship.find_by_id(sco.id).should be_nil
+      end
+    end
+  end
+  describe "positions associations" do
+    before { @user.save }
+    let!(:company) { FactoryGirl.create(:company) }
+    let!(:older_position) do
+      FactoryGirl.create(:position, user: @user, company: company,
+       start_date: "1999-02-03", end_date: "2001-02-03")
+    end
+    let!(:newer_position) do
+      FactoryGirl.create(:position, user: @user, company: company,
+       start_date: "2002-02-03", end_date: "2004-02-03")
+    end
+
+    it "should have the right positions in the right order" do
+      @user.positions.should == [newer_position, older_position]
+    end
+
+    it "should destroy associated positions" do
+      positions = @user.positions.dup
+      @user.destroy
+      positions.should_not be_empty
+      positions.each do |pos|
+        Position.find_by_id(pos.id).should be_nil
+      end
+    end
+  end
+  describe "speaking associations" do
+    before { @user.save }
+    let!(:speaking1) do
+      FactoryGirl.create(:speaking, user: @user, language_name: "English")
+    end
+    let!(:speaking2) do
+      FactoryGirl.create(:speaking, user: @user, language_name: "Italian")
+    end
+
+    it "should destroy associated speakings" do
+      speakings = @user.speakings.dup
+      @user.destroy
+      speakings.should_not be_empty
+      speakings.each do |spe|
+        Speaking.find_by_id(spe.id).should be_nil
       end
     end
   end

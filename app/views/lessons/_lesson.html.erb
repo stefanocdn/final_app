@@ -9,6 +9,8 @@
       <%= link_to image_tag(lesson.user.avatar_url.to_s, alt: lesson.user.to_s, class: "avatar", size: "150x150"), lesson.user %>
 
         <h4><%= lesson.user.to_s %></h4>
+        <span class="location"><small><i class="fa fa-map-marker"></i> <%= lesson.city %>, <%= lesson.country %></small>
+        </span>
         <span class="view_profile">
           <small><i class="fa fa-eye"></i> <%= link_to "View Profile", lesson.user %></small>
         </span> 

@@ -33,4 +33,36 @@ FactoryGirl.define do
     reviewed
     rating 4
   end
+
+  factory :scholarship do
+    sequence(:degree)  { |n| "Degree #{n}" }
+    sequence(:field)  { |n| "Field #{n}" }
+    user
+    school
+    start_date "1995-09-08"
+    end_date "2003-02-09"
+  end
+  factory :school do
+    sequence(:name)  { |n| "Ecole #{n}" }
+    sequence(:city)  { |n| "Ville #{n}" }
+    sequence(:country)  { |n| "Country #{n}" }
+  end
+  factory :position do
+    sequence(:city)  { |n| "Ville #{n}" }
+    sequence(:country)  { |n| "Country #{n}" }
+    user
+    company
+    start_date "1995-09-08"
+    end_date "2003-02-09"
+  end
+  factory :company do
+    sequence(:name)  { |n| "Company #{n}" }
+  end
+  factory :speaking do
+    user
+    language
+  end
+  factory :language do
+    sequence(:name)  { |n| "Language #{n}" }
+  end
 end

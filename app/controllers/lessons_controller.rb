@@ -9,7 +9,6 @@ class LessonsController < ApplicationController
     	@lessons = Lesson.tagged_with(params[:tag]).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
       elsif params[:location].present?
       	@lessons = Lesson.near(params[:location], 5, :order => :distance).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
-      	render json: @lessons.map(&:city)
       else
 	    @lessons = Lesson.text_search(params[:search]).includes(:user).order(sort_column + ' ' + sort_direction).page(params[:page]).per_page(4)
 	  end
@@ -18,6 +17,11 @@ class LessonsController < ApplicationController
 		marker.lng lesson.longitude
 		marker.infowindow render_to_string(:partial => "/lessons/lesson_gmap", :locals => { :lesson => lesson})
 	  end
+	end
+
+	def location_suggestion
+	  @lessons = Lesson.where('city IS NOT ?', nil).order(:city).where("city ilike ?", "%#{params[:term]}%")
+	  render json: @lessons.map(&:city)
 	end
 
 	def new

@@ -5,18 +5,28 @@
 <div class="col-md-6 col-md-offset-3">
 <%= form_for(@user) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
+<div class="field">
 <%= f.label :first_name, "First Name" %>
-<%= f.text_field :first_name, autofocus: true %><br/>
+<%= f.text_field :first_name %>
+</div>
+<div class="field">
 <%= f.label :last_name, "Last Name" %>
-<%= f.text_field :last_name %><br/>
+<%= f.text_field :last_name %>
+</div>
+<div class="field">
 <%= f.label :email %>
-<%= f.text_field :email %><br/>
+<%= f.text_field :email %>
+</div>
+<div class="field">
 <%= f.label :password %>
-<%= f.password_field :password %><br/>
+<%= f.password_field :password %>
+</div>
+<div class="field">
 <%= f.label :password_confirmation, "Confirmation" %>
-<%= f.password_field :password_confirmation %><br/>
+<%= f.password_field :password_confirmation %>
+</div>
 <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
 <% end %>
-</div><!-- span6 offset3 -->
-</div><!-- row -->
+</div><!-- span4 offset3 -->
+</div>
 </div><!-- container -->
