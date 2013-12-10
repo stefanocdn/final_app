@@ -20,6 +20,7 @@ gem 'rmagick'
 gem 'pg_search'
 gem 'geocoder'
 gem 'gmaps4rails'
+gem 'omniauth-twitter'
 
 group :development, :test do
 gem 'rspec-rails', '2.11.0'
